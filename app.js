@@ -22,12 +22,11 @@ connect.then(() => console.log('Connected correctly to server'),
     err => console.log(err)
 );
 
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 const campsiteRouter = require('./routes/campsiteRouter');
 const promotionRouter = require('./routes/promotionRouter');
 const partnerRouter = require('./routes/partnerRouter');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -46,7 +45,7 @@ app.use('/users', usersRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/campsites', campsiteRouter);
+app.use('/campsites', campsiteRouter); //will go to campsite router
 app.use('/promotions', promotionRouter);
 app.use('/partners', partnerRouter);
 

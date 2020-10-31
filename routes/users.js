@@ -6,9 +6,28 @@ const authenticate = require('../authenticate');
 const router = express.Router();
 
 /* GET users listing. */
+/*
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
-});
+}); //return an array with all the user documents after confimed admin
+*/
+
+router.route('/')
+.get(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    User.find()
+    .then(users => {
+        if (users) {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(users);
+        } else {
+            err = new Error(`User not found`);
+            err.status = 404;
+            return next(err);
+        }
+    })
+    .catch(err => next(err));
+})
 
 router.post('/signup', (req, res) => {
     User.register(
